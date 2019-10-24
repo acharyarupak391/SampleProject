@@ -5,18 +5,18 @@
   $(document).ready(() => {
     var gui = new dat.GUI();
     var canvas = document.getElementById("canvas");
-    canvas.height = 1000;
-    canvas.width = 1000;
+    canvas.height = window.height;
+    canvas.width = window.width;
 
     var ctx = canvas.getContext('2d');
 
     var start = {
-        x: 250,
-        y: 120
+        x: canvas.width/2 - 150,
+        y: canvas.height/2 - 150
       },
       end = {
-        x: 250,
-        y: 390
+        x: canvas.width/2 + 150,
+        y: canvas.height/2 + 150
       },
       cp1 = {
         x: 350,
