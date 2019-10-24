@@ -1,0 +1,87 @@
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js" integrity="sha256-HJ7j+71YYw6Kcs8THwQV9lXmPOcR0eXlg7n8KRTZsyA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(() => {
+    var gui = new dat.GUI();
+    var canvas = document.getElementById("canvas");
+    canvas.height = 1000;
+    canvas.width = 1000;
+
+    var ctx = canvas.getContext('2d');
+
+    var start = {
+        x: 250,
+        y: 120
+      },
+      end = {
+        x: 250,
+        y: 390
+      },
+      cp1 = {
+        x: 350,
+        y: 300
+      },
+      cp2 = {
+        x: 200,
+        y: 200
+      };
+
+    var startP = gui.addFolder('Start Point');
+    var endP = gui.addFolder('End Point');
+    var conP1 = gui.addFolder('Control Point 1(Red)');
+    var conP2 = gui.addFolder('Control Point 2(Blue)');
+
+    startP.add(start, 'x', 0, 500).name('x');
+    startP.add(start, 'y', 0, 500).name('y');
+    endP.add(end, 'x', 0, 500).name('x');
+    endP.add(end, 'y', 0, 500).name('y');
+    conP1.add(cp1, 'x', 0, 500).name('x');
+    conP1.add(cp1, 'y', 0, 500).name('y');
+    conP1.open();
+    conP2.add(cp2, 'x', 0, 500).name('x');
+    conP2.add(cp2, 'y', 0, 500).name('y');
+    conP2.open();
+
+    animate();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, 1000, 1000);
+      ctx.beginPath();
+
+      ctx.moveTo(start.x, start.y);
+      ctx.strokeStyle = 'green';
+      ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, end.x, end.y);
+      ctx.stroke();
+      ctx.closePath();
+
+
+      ctx.beginPath();
+      ctx.fillStyle = 'red';
+      ctx.arc(cp1.x, cp1.y, 3, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.closePath();
+      ctx.beginPath();
+      ctx.fillStyle = 'blue';
+      ctx.arc(cp2.x, cp2.y, 3, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.closePath();
+
+    }
+
+  });
+
+</script>
+<style>
+  body {
+    margin: 0;
+  }
+
+</style>
+
+<body>
+  <canvas id="canvas"></canvas>
+</body>
+
+</html>
